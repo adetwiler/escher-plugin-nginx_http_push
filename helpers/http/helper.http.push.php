@@ -48,7 +48,7 @@ class Plugin_nginx_http_push_Helper_http_push extends Helper {
 
 		switch ($method) {
 			case 'GET':
-				curl_setopt($c, CURLOPT_GET, TRUE);
+				curl_setopt($ci, CURLOPT_GET, TRUE);
 				break;
 			case 'POST':
 				curl_setopt($ci, CURLOPT_POST, TRUE);
