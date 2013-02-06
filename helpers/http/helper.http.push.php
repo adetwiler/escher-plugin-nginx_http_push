@@ -18,7 +18,13 @@ class Plugin_nginx_http_push_Helper_http_push extends Helper {
 
 	function publish($id, $data='1') {
 		$CFG = Load::CFG();
-		$this->http($CFG['comet']['publish_url'].'?'.$CFG['comet']['channel_name'].'='.$id,'POST',$data);
+        if (is_array($CFG['comet']['publish_url'])) {
+            foreach ($CFG['comet']['publish_url'] as $url) {
+                $this->http($url.'?'.$CFG['comet']['channel_name'].'='.$id,'POST',$data);
+            }
+        } else {
+		    $this->http($CFG['comet']['publish_url'].'?'.$CFG['comet']['channel_name'].'='.$id,'POST',$data);
+        }
 		if ($this->http_code != '202') { return false; }
 		return true;
 	}
