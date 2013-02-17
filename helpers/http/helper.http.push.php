@@ -4,9 +4,9 @@ class Plugin_nginx_http_push_Helper_http_push extends Helper {
 	/* Contains the last HTTP status code returned. */
 	public $http_code;
 	/* Set timeout default. */
-	public $timeout = 30;
+	public $timeout;
 	/* Set connect timeout. */
-	public $connecttimeout = 30; 
+	public $connecttimeout;
 	/* Verify SSL Cert. */
 	public $ssl_verifypeer = FALSE;
 	/* Respons format. */
@@ -15,6 +15,23 @@ class Plugin_nginx_http_push_Helper_http_push extends Helper {
 	public $http_info;
 	/* Set the useragnet. */
 	public $useragent = 'Escher';
+
+    function __construct($args=array()) {
+        $CFG = Load::CFG();
+
+        if (!empty($CFG['comet']['timeout'])) {
+            $this->timeout = $CFG['comet']['timeout'];
+        } else {
+            $this->timeout = 30;
+        }
+        if (!empty($CFG['comet']['connecttimeout'])) {
+            $this->connecttimeout = $CFG['comet']['connecttimeout'];
+        } else {
+            $this->connecttimeout = 30;
+        }
+
+        parent::__construct($args);
+    }
 
 	function publish($id, $data='1') {
 		$CFG = Load::CFG();
